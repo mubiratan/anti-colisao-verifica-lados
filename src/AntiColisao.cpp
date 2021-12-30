@@ -23,12 +23,14 @@ void AntiColisao::loop_anti_colisao() {
             {
                 motores.stop();          
                 verificaObstaculos();
+                delay(ESPERA);
 
                 // Enquanto tiver 2 obstáculos dos lados, continua andanda para trás
                 while (pilha.size() == 2) {
                     pilha.pop();
                     pilha.pop();
-                    andaParaTras(ESPERA_MOVIMENTO);
+                    delay(ESPERA);
+                    andaPorUmTempo(PARA_TRAS, ESPERA_MOVIMENTO);
                     delay(ESPERA);
                     verificaObstaculos();
                 }
@@ -37,26 +39,25 @@ void AntiColisao::loop_anti_colisao() {
                 if (pilha.empty()) {
                     if (millis() % 2 == 0) { // Gira para direita
                         delay(ESPERA);
-                        pilha.pop();
                         giraRobo(VELOCIDADE, -VELOCIDADE, ROTACIONA_90);
-                        motores.forward(VELOCIDADE);
-                    } else { // Gira para esquerda
                         delay(ESPERA);
-                        pilha.pop();
+                        motores.forward(VELOCIDADE);
+                    } else { // Vai para esquerda
+                        delay(ESPERA);
                         giraRobo(-VELOCIDADE, VELOCIDADE, ROTACIONA_90);
                         delay(ESPERA);
                         motores.forward(VELOCIDADE);
                     }    
-                } else if(pilha.top() == OBSTACULO_ESQUERDA) {
+                } else if(pilha.top() == OBSTACULO_DIREITA) {
                     delay(ESPERA);
                     pilha.pop();
-                    giraRobo(VELOCIDADE, -VELOCIDADE, ROTACIONA_90);
+                    giraRobo(-VELOCIDADE, VELOCIDADE, ROTACIONA_90);
                     delay(ESPERA);
                     motores.forward(VELOCIDADE);     
                 } else {
                     delay(ESPERA);
                     pilha.pop();
-                    giraRobo(-VELOCIDADE, VELOCIDADE, ROTACIONA_90);
+                    giraRobo(VELOCIDADE, -VELOCIDADE, ROTACIONA_90);
                     delay(ESPERA);
                     motores.forward(VELOCIDADE);     
                 }                
@@ -68,21 +69,23 @@ void AntiColisao::loop_anti_colisao() {
     }
 }
 
-// Anda para trás
-void AntiColisao::andaParaTras(const uint_fast8_t espera_movimento)
+// Anda para frente ou para trás
+inline void AntiColisao::andaPorUmTempo(const uint_fast8_t sentido,  const uint_fast8_t espera_movimento)
 {
-    // Anda para trás
-    motores.stop(); //para os motores do robo
-    delay(ESPERA);
-    motores.backward(VELOCIDADE); //recua o robo girando os motores para tras
-    delay(espera_movimento); //matem o movimento do robo
-    motores.stop(); //para os motores do robo
+    if(sentido == PARA_FRENTE) {
+        motores.forward(VELOCIDADE); 
+    } else {
+        motores.backward(VELOCIDADE);
+    }
+    
+    delay(espera_movimento);
 }
 
 // Gira o robô para os lados e verifica se tem obstáculos 
 void AntiColisao::verificaObstaculos() 
 {
     delay(ESPERA);
+
     // Gira para direita
     giraRobo(VELOCIDADE, -VELOCIDADE, ROTACIONA_90);
     
@@ -107,13 +110,13 @@ void AntiColisao::verificaObstaculos()
         pilha.push(OBSTACULO_ESQUERDA);
     }
 
-    // Volta pra o centro
+    // Volta para o centro
     delay(ESPERA);
     giraRobo(VELOCIDADE, -VELOCIDADE, ROTACIONA_90);
 }
 
 // Gira o robô para os lados
-void AntiColisao::giraRobo(const uint_fast8_t velocidade, const uint_fast8_t velocidade2, const uint_fast8_t tempo_espera)
+inline void AntiColisao::giraRobo(const uint_fast8_t velocidade, const uint_fast8_t velocidade2, const uint_fast8_t tempo_espera)
 {   
     delay(ESPERA);
     motores.turn(velocidade, velocidade2);
@@ -123,7 +126,7 @@ void AntiColisao::giraRobo(const uint_fast8_t velocidade, const uint_fast8_t vel
 }
 
 //funcao para a leitura do sensor
-int AntiColisao::sensor_ultrassonico() 
+inline int AntiColisao::sensor_ultrassonico() 
 {
     //realiza o pulso de 10 microsegundos no trigger do sensor
     digitalWrite(PINO_TRIGGER, HIGH);
