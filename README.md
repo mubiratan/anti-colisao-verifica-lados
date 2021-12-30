@@ -2,7 +2,7 @@
 
 Foi escrito para o hardware ESP32 compatível com a arquitetura Arduino.
 
-O programa foi escrito em C++ usando o plugin PlatformIO no VSCode e basicamente faz o seguinte:
+O programa foi escrito em C++ usando o plugin PlatformIO no VSCode e a biblioteca "RoboCore_Vespa".
 
 1) Robô inicia andando para a frente;
 2) Se achar um obstáculo, para, vira para esquerda e direita, se encontrar obstáculos grava na stack;
