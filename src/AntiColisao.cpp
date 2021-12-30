@@ -24,7 +24,7 @@ void AntiColisao::loop_anti_colisao() {
                 motores.stop();          
                 verificaObstaculos();
 
-                // Enquanto tiver 2 obstáculos
+                // Enquanto tiver 2 obstáculos dos lados, continua andanda para trás
                 while (pilha.size() == 2) {
                     pilha.pop();
                     pilha.pop();
@@ -33,20 +33,21 @@ void AntiColisao::loop_anti_colisao() {
                     verificaObstaculos();
                 }
 
+                // Se a pilha estiver vazia, ou seja, sem obstáculos dos lados
                 if (pilha.empty()) {
-                    if (millis() % 2 == 0) { //Direita
+                    if (millis() % 2 == 0) { // Gira para direita
                         delay(ESPERA);
                         pilha.pop();
                         giraRobo(VELOCIDADE, -VELOCIDADE, ROTACIONA_90);
                         motores.forward(VELOCIDADE);
-                    } else { // Esquerda
+                    } else { // Gira para esquerda
                         delay(ESPERA);
                         pilha.pop();
                         giraRobo(-VELOCIDADE, VELOCIDADE, ROTACIONA_90);
                         delay(ESPERA);
                         motores.forward(VELOCIDADE);
                     }    
-                } else if(pilha.top() == ESQUERDA) {
+                } else if(pilha.top() == OBSTACULO_ESQUERDA) {
                     delay(ESPERA);
                     pilha.pop();
                     giraRobo(VELOCIDADE, -VELOCIDADE, ROTACIONA_90);
@@ -67,6 +68,7 @@ void AntiColisao::loop_anti_colisao() {
     }
 }
 
+// Anda para trás
 void AntiColisao::andaParaTras(const uint_fast8_t espera_movimento)
 {
     // Anda para trás
@@ -89,7 +91,7 @@ void AntiColisao::verificaObstaculos()
     
     if (distancia <= DISTANCIA_OBSTACULO)
     {
-        pilha.push(DIREITA);
+        pilha.push(OBSTACULO_DIREITA);
     }
 
     delay(ESPERA);
@@ -102,7 +104,7 @@ void AntiColisao::verificaObstaculos()
     
     if (distancia <= DISTANCIA_OBSTACULO)
     {
-        pilha.push(ESQUERDA);
+        pilha.push(OBSTACULO_ESQUERDA);
     }
 
     // Volta pra o centro
@@ -110,6 +112,7 @@ void AntiColisao::verificaObstaculos()
     giraRobo(VELOCIDADE, -VELOCIDADE, ROTACIONA_90);
 }
 
+// Gira o robô para os lados
 void AntiColisao::giraRobo(const uint_fast8_t velocidade, const uint_fast8_t velocidade2, const uint_fast8_t tempo_espera)
 {   
     delay(ESPERA);

@@ -1,6 +1,5 @@
 /********************************************************
  * RoboCore - Kit Robo Explorer - Robo Anticolisao
- * Codigo fonte do projeto do robo anticolisao do kit.
  * 
  * O robo fica constantemente medindo a distancia do
  * sensor ultrassonico e, quando a distancia for menor que 

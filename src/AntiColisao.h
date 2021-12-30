@@ -27,7 +27,7 @@ class AntiColisao
     const unsigned int ROTACIONA_180 = ESPERA_MOVIMENTO * 2;
 
     // Pilha
-    const uint_fast8_t FRENTE = 0, DIREITA = 1, ESQUERDA = 2;
+    const uint_fast8_t OBSTACULO_FRENTE = 0, OBSTACULO_DIREITA = 1, OBSTACULO_ESQUERDA = 2;
 
     public:
     //declaracao do objeto "motores"
