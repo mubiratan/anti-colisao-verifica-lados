@@ -10,18 +10,12 @@
 
 #include "AntiColisao.h"
 
-  //declaracao dos pinos do sensor
-  const uint_fast8_t PINO_TRIGGER = 25;
-  const uint_fast8_t PINO_ECHO = 26;
-
-void setup() {  
-
-    pinMode(PINO_TRIGGER, OUTPUT); //configuracao do pino trigger como saida
-    pinMode(PINO_ECHO, INPUT); //configuracao do pino echo como entrada
-    digitalWrite(PINO_TRIGGER, LOW); //inicia o pino trigger com o nivel logico baixo
+void setup() {
+  AntiColisao antiColisao;  
+  antiColisao.setup_anti_colisao();
 }
 
 void loop() {
-  AntiColisao a;
-  //antiColisao.loop_anti_colisao();  
+  AntiColisao antiColisao;
+  antiColisao.loop_anti_colisao();  
 }
