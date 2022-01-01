@@ -1,16 +1,10 @@
 #include "AntiColisao.h"
 #include "Variaveis.h"
 
-void AntiColisao::setup_anti_colisao() {
-    pinMode(PINO_TRIGGER, OUTPUT); //configuracao do pino trigger como saida
-    pinMode(PINO_ECHO, INPUT); //configuracao do pino echo como entrada
-    digitalWrite(PINO_TRIGGER, LOW); //inicia o pino trigger com o nivel logico baixo
-}
-
 void AntiColisao::loop_anti_colisao() {
 
     while(true) 
-    {
+    {   
         delay(ESPERA); //aguarda o tempo de espera para leitura do sensor
         distancia = sensor_ultrassonico(); //armazena a distancia lida pelo sensor a variavel distancia
 
@@ -22,7 +16,7 @@ void AntiColisao::loop_anti_colisao() {
 
             //confirma se a distancia lida pelo sensor e menor ou igual ao valor configurado na variavel "DISTANCIA_OBSTACULO"
             if (distancia <= DISTANCIA_OBSTACULO) 
-            {
+            {   
                 motores.stop();          
                 verificaObstaculos();
                 delay(ESPERA);
@@ -35,6 +29,7 @@ void AntiColisao::loop_anti_colisao() {
                     andaPorUmTempo(PARA_TRAS, ESPERA_MOVIMENTO);
                     delay(ESPERA);
                     verificaObstaculos();
+                    delay(ESPERA);
                 }
 
                 // Se a pilha estiver vazia, ou seja, sem obstáculos dos lados
@@ -65,7 +60,6 @@ void AntiColisao::loop_anti_colisao() {
                 }                
             }
         } else { //caso a distancia do sensor não seja menor que o valor "DISTANCIA_OBSTACULO" na primeira verificacao
-
             motores.forward(VELOCIDADE); //mantem o robo andando para frente
         }
     }

@@ -15,10 +15,9 @@ const uint_fast8_t ESPERA = 150;
 //declaracao da variavel que armazena o tempo que os movimentos de desvio irao durar
 const unsigned int ESPERA_MOVIMENTO = 870;
 //declaracao da variavel que armazena a distancia medida pelo sensor
-int distancia;
 const unsigned int ROTACIONA_90 = ESPERA_MOVIMENTO;
 const unsigned int ROTACIONA_180 = ESPERA_MOVIMENTO * 2;
-
+const int LED_Vespa = 15;
 // Pilha
 const uint_fast8_t OBSTACULO_DIREITA = 1, OBSTACULO_ESQUERDA = 2;
 const uint_fast8_t PARA_FRENTE = 0, PARA_TRAS = 1; 
