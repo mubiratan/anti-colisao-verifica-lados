@@ -10,6 +10,7 @@ static std::stack<uint_fast8_t> pilha{};
 class AntiColisao 
 {
     public:
+    int distancia;
     //declaracao do objeto "motores"
     VespaMotors motores;
 
