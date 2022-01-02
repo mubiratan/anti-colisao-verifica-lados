@@ -42,6 +42,5 @@ void setup() {
 
 // Task 2
 void loop() {
-  AntiColisao antiColisao;
-  antiColisao.loop_anti_colisao();  
+  loop_anti_colisao();  
 }
